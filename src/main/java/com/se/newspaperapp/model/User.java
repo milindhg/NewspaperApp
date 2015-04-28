@@ -172,7 +172,9 @@ public class User {
 		User u = null;
 		try {
 			u = ud.selectUserByUnamePwd(uname, pwd);
-			u.setPassword(null);
+			if(u!=null){
+				u.setPassword(null);
+			}
 			return u;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
