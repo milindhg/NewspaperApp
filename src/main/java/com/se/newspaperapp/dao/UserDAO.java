@@ -73,6 +73,46 @@ public class UserDAO {
 	 * @return List of users
 	 * @throws SQLException
 	 */
+	public ArrayList<User> selectEditorsAll() throws SQLException {
+		String SelectUsersAllStatement = SELECT + " where role=1";
+		PreparedStatement ps = null;
+		ResultSet rSet = null;
+		try {
+			con = DatabaseHandlerSingleton.getDBConnection();
+			ps = con.prepareStatement(SelectUsersAllStatement);
+			rSet = ps.executeQuery();
+			ArrayList<User> users = new ArrayList<User>();
+			if (rSet != null) {
+				while (rSet.next()) {
+					User u = new User();
+					u.setUserId(rSet.getInt("user_id"));
+					u.setFirstName(rSet.getString("fname"));
+					u.setLastName(rSet.getString("lname"));
+					u.setContactNumber(rSet.getString("contact_number"));
+					u.setEmail(rSet.getString("email"));
+					u.setPassword(rSet.getString("password"));
+					u.setRole(rSet.getInt("role"));
+					users.add(u);
+				}
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (rSet != null)
+				rSet.close();
+			if (ps != null)
+				ps.close();
+			/*con.close();*/
+		}
+
+	}
+
+	/**
+	 * @return List of users
+	 * @throws SQLException
+	 */
 	public ArrayList<User> selectMutlipleUsersByPrimaryKey(int[] ids) throws SQLException {
 		String SelectUsersByPrimaryKeyStatement = SELECT;
 		SelectUsersByPrimaryKeyStatement = SelectUsersByPrimaryKeyStatement + " where user.user_id in (?,";

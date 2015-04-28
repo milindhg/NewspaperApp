@@ -18,15 +18,19 @@
 <body>
   <div class="container">
     <section class="register">
-      <h1>Editor View</h1>
+      <h1>Add New Editor</h1>
+      <form method="post" action="adduser">
       <div class="reg_section personal_info">
-      <h3>: </h3>
-      
+      <h3>Your Personal Information</h3>
+      <input type="text" name="firstname" value="" placeholder="Your First Name">
+      <input type="text" name="lastname" value="" placeholder="Your Last Name">
+      <input type="text" name="contactnumber" value="" placeholder="Your Contact Number">
+      <input type="text" name="email" value="" placeholder="Your E-mail Address">
       </div>
       <div class="reg_section password">
-      <h3>:</h3>
-      
-      <!-- <input type="password" name="confirm" value="" placeholder="Confirm Password"> -->
+      <h3>Your Password</h3>
+      <input type="password" name="password" value="" placeholder="Your Password">
+      <input type="password" name="confirm" value="" placeholder="Confirm Password">
       </div>
       <!-- <div class="reg_section password">
       <h3>Your Address</h3>
@@ -38,16 +42,14 @@
       </select>
       <textarea name="textarea" id="">Your Full Address</textarea>
       </div> -->
-      <p class="terms">
-        <label>
-          <!-- <input type="checkbox" name="remember_me" id="remember_me"> -->
-           ${message}
-        </label>
-      </p>
-      <p class="submit"></p>
+      <p class="submit"><input type="submit" name="commit" value="Add Editor"></p>
+      </form>
     </section>
   </div>
 
+  <section class="about">
+    <!-- Download it for free from <a href="http://www.imomen.com/">iMomen</a> -->
+  </section>
 
 </body>
 </html>

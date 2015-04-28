@@ -1,6 +1,7 @@
 package com.se.newspaperapp.model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.se.newspaperapp.dao.UserDAO;
 
@@ -181,6 +182,22 @@ public class User {
 			e.printStackTrace();
 		}
 		return u;
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public ArrayList<User> getAllEditors() {
+		ArrayList<User> ulist = null;
+		try {
+			ulist = ud.selectEditorsAll();
+			return ulist;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ulist;
 	}
 
 	/**
