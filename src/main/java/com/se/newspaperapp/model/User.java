@@ -17,6 +17,7 @@ public class User {
 	private String email;
 	private String password;
 	private int role;
+	private int department;
 	UserDAO ud;
 
 	public User() {
@@ -149,6 +150,21 @@ public class User {
 		this.role = role;
 	}
 
+	
+	/**
+	 * @return the department
+	 */
+	public int getDepartment() {
+		return department;
+	}
+
+	/**
+	 * @param department the department to set
+	 */
+	public void setDepartment(int department) {
+		this.department = department;
+	}
+
 	/**
 	 * @param id
 	 * @return
@@ -241,5 +257,19 @@ public class User {
 		}
 		return res;
 	}
+
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", contactNumber=" + contactNumber
+				+ ", email=" + email + ", password=" + password + ", role="
+				+ role + ", ud=" + ud + "]";
+	}
+	
+	
 
 }

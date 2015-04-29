@@ -8,7 +8,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Login</title>
+  <title>Add Business Feed</title>
   <link
 	href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet">
@@ -18,21 +18,14 @@
 <body>
   <div class="container">
     <section class="register">
-      <h1>Editor View</h1>
+      <!-- <h1>Add New Editor</h1> -->
+      <form method="post" action="addfeed">
       <div class="reg_section personal_info">
-      <h3>: </h3>
-      
+      <h3>Your Personal Information</h3>
+      <input type="text" name="headline" value="" placeholder="Your Headline Name">
       </div>
-      <div class="reg_section password">
-      <a href="addfeed"> Add New Feed </a>
-      </div>
-      <p class="terms">
-        <label>
-          <!-- <input type="checkbox" name="remember_me" id="remember_me"> -->
-           ${message}
-        </label>
-      </p>
-      <p class="submit"></p>
+      <p class="submit"><input type="submit" name="commit" value="Add Feed"></p>
+      </form>
     </section>
   </div>
 
