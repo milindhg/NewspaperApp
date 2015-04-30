@@ -2,12 +2,11 @@ package com.se.newspaperapp.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class DatabaseHandlerSingleton {
 
+	private static volatile DatabaseHandlerSingleton db;
 	private static Connection con = null;
 
 	// private Statement stmt = null;
@@ -27,9 +26,9 @@ public class DatabaseHandlerSingleton {
 	}
 
 	public static Connection getDBConnection() {
-		if (con == null) {
+		if (db == null) {
 			synchronized (DatabaseHandlerSingleton.class) {
-				if (con == null) {
+				if (db == null) {
 					createConnection();
 				}
 			}

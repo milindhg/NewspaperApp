@@ -3,19 +3,34 @@
  */
 package com.se.newspaperapp.model.decorators;
 
+import java.util.ArrayList;
+
+import com.se.newspaperapp.model.products.Feed;
+
 /**
  * @author Milind
  *
  */
 public class TwitterFeed extends FeedDecorator {
 
-	/* (non-Javadoc)
-	 * @see com.se.newspaperapp.model.FeedDecorator#getFeed()
-	 */
+	ArrayList<Feed> feeds = null;
+
+	public TwitterFeed(ArrayList<Feed> feedslist) {
+		feeds = feedslist;
+	}
+
 	@Override
-	public void getFeeds() {
+	public void addFeed() {
 		// TODO Auto-generated method stub
-		//super.getFeed();
+		
+	}
+
+	@Override
+	public ArrayList<Feed> getFeeds(int channel) {
+		for (Feed f : feeds) {
+			f.setHeadline("Twitter Feed:" + f.getHeadline());
+		}
+		return feeds;
 	}
 
 }

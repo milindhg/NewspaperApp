@@ -32,23 +32,24 @@
       <input type="password" name="password" value="" placeholder="Your Password">
       <input type="password" name="confirm" value="" placeholder="Confirm Password">
       </div>
-      <!-- <div class="reg_section password">
+      <div class="reg_section password">
       <h3>Your Address</h3>
-      <select>
-        <option value="">Egypt</option>
-        <option value="">Palastine</option>
-        <option value="">Syria</option>
-        <option value="">Italy</option>
+      <select name="department">
+        <option value="1">Business</option>
+        <option value="2">Entertainment</option>
+        <option value="3">Sports</option>
+        <!-- <option value="">Italy</option> -->
       </select>
-      <textarea name="textarea" id="">Your Full Address</textarea>
-      </div> -->
+      </div>
       <p class="submit"><input type="submit" name="commit" value="Add Editor"></p>
       </form>
     </section>
+    
   </div>
 
   <section class="about">
     <!-- Download it for free from <a href="http://www.imomen.com/">iMomen</a> -->
+    <a href="logout"> Logout </a>
   </section>
 
 </body>

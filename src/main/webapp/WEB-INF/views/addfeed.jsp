@@ -18,7 +18,7 @@
 <body>
   <div class="container">
     <section class="register">
-      <!-- <h1>Add New Editor</h1> -->
+      <h1>Add New Feed</h1>
       <form method="post" action="addfeed">
       <div class="reg_section personal_info">
       <h3>Your Personal Information</h3>
@@ -27,6 +27,9 @@
       <p class="submit"><input type="submit" name="commit" value="Add Feed"></p>
       </form>
     </section>
+    <div class="reg_section password">
+    	<a href="logout"> Logout </a>
+    </div>
   </div>
 
 

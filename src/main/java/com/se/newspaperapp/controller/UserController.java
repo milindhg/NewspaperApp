@@ -14,7 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.se.newspaperapp.dao.DatabaseHandlerSingleton;
 import com.se.newspaperapp.model.User;
+import com.se.newspaperapp.model.decorators.InternetFeed;
+import com.se.newspaperapp.model.decorators.NewsFeed;
+import com.se.newspaperapp.model.decorators.TwitterFeed;
+import com.se.newspaperapp.model.products.BusinessFeed;
+import com.se.newspaperapp.model.products.EntertainmentFeed;
+import com.se.newspaperapp.model.products.Feed;
+import com.se.newspaperapp.model.products.GenericFeed;
+import com.se.newspaperapp.model.products.SportsFeed;
 
 /**
  * Handles requests for the application home page.
@@ -60,6 +69,17 @@ public class UserController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	@RequestMapping(value = "logout")
+	public String logout(Model model, HttpSession session) {
+		session.invalidate();
+		model.asMap().clear();
+		DatabaseHandlerSingleton.close();
+		return "login";
+	}
+
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 */
 	@RequestMapping(value = "register", method = RequestMethod.GET)
 	public String register(Locale locale, Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -96,15 +116,49 @@ public class UserController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "home")
+	@RequestMapping(value = "home", method = RequestMethod.GET)
 	public String homeview(Locale locale, Model model, HttpSession session) {
 		User u = (User) session.getAttribute("sessionUser");
+		Feed feed =null;
+		ArrayList<Feed> feeds =null;
 		if (null == u)
 			return "login";
 		switch (u.getRole()) {
-		case 0:
+		case 0:	//Role is User
+			feed = new GenericFeed();
+			feeds = feed.getFeeds(1);
+			InternetFeed internetFeeds = new InternetFeed(feeds);
+			feeds = internetFeeds.getFeeds(1);
+			model.addAttribute("internetfeeds", feeds);
+
+			feed = new GenericFeed();
+			feeds= feed.getFeeds(1);
+			NewsFeed newspaperFeeds = new NewsFeed(feeds);
+			feeds = newspaperFeeds.getFeeds(1);
+			model.addAttribute("newspaperfeeds", feeds);
+			
+			feed = new GenericFeed();
+			feeds = feed.getFeeds(1);
+			TwitterFeed twitterFeeds = new TwitterFeed(feeds);
+			feeds = twitterFeeds.getFeeds(1);
+			model.addAttribute("twitterfeeds", feeds);
 			return "userview";
-		case 1:
+		case 1:  //Role is editor
+			int dept = u.getDepartment();
+			switch(dept){
+			case 1: 	//Department is Business
+				feed = new BusinessFeed();
+				break;
+			case 2: 	//Department is Entertainment
+				feed = new EntertainmentFeed();
+				break;
+			case 3: 	//Department is Sports
+				feed = new SportsFeed();
+				break;
+			}
+				feeds = feed.getFeeds(1);
+				model.addAttribute("feeds", feeds);
+
 			return "editorview";
 		case 2:
 			ArrayList<User> usersList = uh.getAllEditors();
@@ -134,7 +188,8 @@ public class UserController {
 			@RequestParam("lastname") String lastName,
 			@RequestParam("contactnumber") String contactNumber,
 			@RequestParam("email") String email,
-			@RequestParam("password") String password, Model model,
+			@RequestParam("password") String password,
+			@RequestParam("department") int department, Model model,
 			HttpSession session) {
 		User u = new User();
 		u.setFirstName(firstName);
@@ -143,6 +198,7 @@ public class UserController {
 		u.setPassword(password);
 		u.setContactNumber(contactNumber);
 		u.setRole(1);
+		u.setDepartment(department);
 		int res = u.addUser(u);
 
 		return "redirect:home";
@@ -154,12 +210,11 @@ public class UserController {
 	@RequestMapping(value = "deleteuser", method = RequestMethod.GET)
 	public String deleteUser(@RequestParam("userId") int userId, Model model,
 			HttpSession session) {
-		
+
 		int res = uh.deleteUser(userId);
 
 		return "redirect:home";
 	}
-	
 	
 	
 

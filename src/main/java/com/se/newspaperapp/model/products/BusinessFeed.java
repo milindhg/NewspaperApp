@@ -4,6 +4,7 @@
 package com.se.newspaperapp.model.products;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.se.newspaperapp.dao.FeedDAO;
 
@@ -13,38 +14,39 @@ import com.se.newspaperapp.dao.FeedDAO;
  */
 public class BusinessFeed extends Feed {
 
-	public BusinessFeed(String headline){
-		department=1;
-		this.headline = headline;
+	public BusinessFeed() {
+		department = 1;
 		fdao = new FeedDAO();
 	}
-	
-	@Override
-	public void deleteFeed() {
-/*		try {
-			fdao.deleteFeed(id);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 
+	public BusinessFeed(String headline) {
+		department = 1;
+		this.headline = headline;
+		
 	}
 
 	@Override
-	public void getFeed() {
-		// TODO Auto-generated method stub
+	public void deleteFeed() {
+		/*
+		 * try { fdao.deleteFeed(id); } catch (SQLException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); }
+		 */
+	}
+
+	@Override
+	public Feed getFeed() {
+		return null;
 
 	}
 
 	@Override
 	public void addFeed() {
 		try {
-			fdao.insertFeed(headline,department);
+			fdao.insertFeed(headline, department);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	
 }

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.se.newspaperapp.model.User;
 import com.se.newspaperapp.model.creators.BusinessFeedEditor;
+import com.se.newspaperapp.model.creators.EntertainmentFeedEditor;
 import com.se.newspaperapp.model.creators.FeedEditor;
+import com.se.newspaperapp.model.creators.SportsFeedEditor;
 import com.se.newspaperapp.model.products.Feed;
 
 /**
@@ -45,22 +47,24 @@ public class FeedController {
 			return "login";
 		} else {
 			int dept = u.getDepartment();
+			FeedEditor feedEditor =null;
+			Feed feed=null;
 			switch(dept){
 			case 1: 
-				FeedEditor feedEditor = new BusinessFeedEditor();
-				Feed feed = feedEditor.createFeed(headline);
+				feedEditor = new BusinessFeedEditor();
+				feed = feedEditor.createFeed(headline);
 				feed.addFeed();
 				break;
-/*			case 2: 
-				FeedEditor feedEditor = new EntertainmentFeedEditor();
-				Feed feed = feedEditor.createFeed(headline);
+			case 2: 
+				feedEditor = new EntertainmentFeedEditor();
+				feed = feedEditor.createFeed(headline);
 				feed.addFeed();
 				break;
 			case 3: 
-				FeedEditor feedEditor = new SportsFeedEditor();
-				Feed feed = feedEditor.createFeed(headline);
+				feedEditor = new SportsFeedEditor();
+				feed = feedEditor.createFeed(headline);
 				feed.addFeed();
-				break;*/
+				break;
 				default:
 					return "login";
 			}

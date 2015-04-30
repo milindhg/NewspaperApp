@@ -20,24 +20,41 @@
     <section class="register">
       <h1>User View</h1>
       <div class="reg_section personal_info">
-      <h3>: </h3>
-      
+				<table border="1">
+					<tr>
+						<th><h3>Internet Headlines</h3></th>
+					</tr>
+					<c:forEach items="${internetfeeds}" var="feed">
+						<tr>
+							<td>${feed.headline}</td>
+						</tr>
+					</c:forEach>
+				</table>      
       </div>
-      <div class="reg_section password">
-      <h3>:</h3>
-      
-      <!-- <input type="password" name="confirm" value="" placeholder="Confirm Password"> -->
+      <div class="reg_section personal_info">
+				<table border="1">
+					<tr>
+						<th><h3>Newspaper Headlines</h3></th>
+					</tr>
+					<c:forEach items="${newspaperfeeds}" var="feed">
+						<tr>
+							<td>${feed.headline}</td>
+						</tr>
+					</c:forEach>
+				</table>      
       </div>
-      <!-- <div class="reg_section password">
-      <h3>Your Address</h3>
-      <select>
-        <option value="">Egypt</option>
-        <option value="">Palastine</option>
-        <option value="">Syria</option>
-        <option value="">Italy</option>
-      </select>
-      <textarea name="textarea" id="">Your Full Address</textarea>
-      </div> -->
+      <div class="reg_section personal_info">
+				<table border="1">
+					<tr>
+						<th><h3>Twitter Headlines</h3></th>
+					</tr>
+					<c:forEach items="${twitterfeeds}" var="feed">
+						<tr>
+							<td>${feed.headline}</td>
+						</tr>
+					</c:forEach>
+				</table>      
+      </div>
       <p class="terms">
         <label>
           <!-- <input type="checkbox" name="remember_me" id="remember_me"> -->
@@ -46,6 +63,9 @@
       </p>
       <p class="submit"></p>
     </section>
+    <div class="reg_section password">
+    	<a href="logout"> Logout </a>
+    </div>
   </div>
 
 

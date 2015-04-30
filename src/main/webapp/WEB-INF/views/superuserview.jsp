@@ -17,7 +17,7 @@
 </head>
 
 <body>
-	<div class="container"">
+	<div class="container" style="width:550px;"">
 		<section class="register">
 			<h1>Super User View</h1>
 			<h2>Manage Editors</h2>
@@ -29,6 +29,7 @@
 						<th><h3>Contact Number</h3></th>
 						<th><h3>Email</h3></th>
 						<th><h3>Role</h3></th>
+						<th><h3>Department</h3></th>
 						<th></th>
 					</tr>
 					<c:forEach items="${users}" var="user">
@@ -38,6 +39,7 @@
 							<td>${user.contactNumber}</td>
 							<td>${user.email}</td>
 							<td>${user.role}</td>
+							<td>${user.department}</td>
 							<td><a href="deleteuser?userId=${user.userId}"> delete </a></td>
 						</tr>
 					</c:forEach>
@@ -55,8 +57,10 @@
 					${message}
 				</label>
 			</p>
-			<p class="submit"></p>
 		</section>
+		<div class="reg_section password">
+			<a href="logout"> Logout </a>
+		</div>
 	</div>
 
 
