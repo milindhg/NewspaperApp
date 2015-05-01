@@ -19,34 +19,23 @@ public class BusinessFeed extends Feed {
 		fdao = new FeedDAO();
 	}
 
+	public BusinessFeed(int id) {
+		this.id=id;
+		department = 1;
+		fdao = new FeedDAO();
+	}
+
 	public BusinessFeed(String headline) {
 		department = 1;
 		this.headline = headline;
-		
+		fdao = new FeedDAO();		
 	}
 
-	@Override
-	public void deleteFeed() {
-		/*
-		 * try { fdao.deleteFeed(id); } catch (SQLException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 */
-	}
-
-	@Override
-	public Feed getFeed() {
-		return null;
-
-	}
-
-	@Override
-	public void addFeed() {
-		try {
-			fdao.insertFeed(headline, department);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public BusinessFeed(int id, String headline) {
+		this.id=id;
+		department = 1;
+		this.headline = headline;
+		fdao = new FeedDAO();
 	}
 
 }

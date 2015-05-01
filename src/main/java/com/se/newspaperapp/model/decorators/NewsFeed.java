@@ -20,12 +20,6 @@ public class NewsFeed extends FeedDecorator {
 	}
 
 	@Override
-	public void addFeed() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public ArrayList<Feed> getFeeds(int channel) {
 		for (Feed f : feeds) {
 			f.setHeadline("Newspaper Feed:" + f.getHeadline());

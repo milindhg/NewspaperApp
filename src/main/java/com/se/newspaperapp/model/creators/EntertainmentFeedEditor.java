@@ -12,12 +12,28 @@ import com.se.newspaperapp.model.products.Feed;
  */
 public class EntertainmentFeedEditor extends FeedEditor {
 
-	/* (non-Javadoc)
-	 * @see com.se.newspaperapp.model.creators.FeedEditor#createFeed(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.se.newspaperapp.model.creators.FeedEditor#createFeed(java.lang.String
+	 * )
 	 */
 	@Override
 	public Feed createFeed(String headline) {
 		Feed feed = new EntertainmentFeed(headline);
+		return feed;
+	}
+
+	@Override
+	public Feed prepareDeleteFeed(int id) {
+		Feed feed = new EntertainmentFeed(id);
+		return feed;
+	}
+
+	@Override
+	public Feed prepareEditFeed(int id, String headline) {
+		Feed feed = new EntertainmentFeed(id, headline);
 		return feed;
 	}
 

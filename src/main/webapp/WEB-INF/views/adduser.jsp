@@ -18,6 +18,7 @@
 <body>
   <div class="container">
     <section class="register">
+			<h2>Hi ${sessionUser.firstName } ${sessionUser.lastName }</h2>
       <h1>Add New Editor</h1>
       <form method="post" action="adduser">
       <div class="reg_section personal_info">

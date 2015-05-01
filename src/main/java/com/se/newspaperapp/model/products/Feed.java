@@ -18,7 +18,7 @@ public abstract class Feed implements IFeed {
 	int id;
 	String headline;
 	int department;
-	
+
 	/**
 	 * @return the id
 	 */
@@ -27,7 +27,8 @@ public abstract class Feed implements IFeed {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -41,7 +42,8 @@ public abstract class Feed implements IFeed {
 	}
 
 	/**
-	 * @param headline the headline to set
+	 * @param headline
+	 *            the headline to set
 	 */
 	public void setHeadline(String headline) {
 		this.headline = headline;
@@ -55,7 +57,8 @@ public abstract class Feed implements IFeed {
 	}
 
 	/**
-	 * @param department the department to set
+	 * @param department
+	 *            the department to set
 	 */
 	public void setDepartment(int department) {
 		this.department = department;
@@ -69,7 +72,8 @@ public abstract class Feed implements IFeed {
 	}
 
 	/**
-	 * @param fdao the fdao to set
+	 * @param fdao
+	 *            the fdao to set
 	 */
 	public void setFdao(FeedDAO fdao) {
 		this.fdao = fdao;
@@ -77,30 +81,49 @@ public abstract class Feed implements IFeed {
 
 	FeedDAO fdao;
 
-	@Override
-	public abstract void addFeed();
+	public void addFeed() {
+		try {
+			fdao.insertFeed(headline, department);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-	// TODO Auto-generated method stub
-	// TODO put the code to insert the feed from the view form into the
-	// object in the feed products and then insert in db in the decorator
-	// decorate and display in the DB.
+	public void editFeed() {
+		try {
+			fdao.updateFeed(id, headline, department);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-	public abstract void deleteFeed();
+	public void deleteFeed() {
+		try {
+			fdao.deleteFeed(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-	public abstract Feed getFeed();
-	
+	public Feed getFeed() {
+		Feed feed=null;
+		try {
+			feed= fdao.selectFeedByPrimaryKey(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return feed;
+	}
+
 	@Override
 	public ArrayList<Feed> getFeeds(int channel) {
 		ArrayList<Feed> feeds = null;
 		try {
 			feeds = fdao.selectFeedsByEditor(department);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return feeds;
 	}
 
-
-	
 }

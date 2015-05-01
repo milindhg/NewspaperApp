@@ -8,7 +8,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Login</title>
+  <title>Home</title>
   <link
 	href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet">
@@ -18,6 +18,7 @@
 <body>
   <div class="container">
     <section class="register">
+			<h2>Hi ${sessionUser.firstName } ${sessionUser.lastName }</h2>
       <h1>User View</h1>
       <div class="reg_section personal_info">
 				<table border="1">

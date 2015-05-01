@@ -19,35 +19,23 @@ public class SportsFeed extends Feed {
 		fdao = new FeedDAO();
 	}
 
+	public SportsFeed(int id) {
+		this.id=id;
+		department = 3;
+		fdao = new FeedDAO();
+	}
+
 	public SportsFeed(String headline) {
 		department = 3;
 		this.headline = headline;
 		fdao = new FeedDAO();
 	}
 
-	@Override
-	public Feed getFeed() {
-		return null;
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addFeed() {
-		try {
-			fdao.insertFeed(headline, department);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void deleteFeed() {
-		/*
-		 * try { fdao.deleteFeed(id); } catch (SQLException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 */
+	public SportsFeed(int id,String headline) {
+		this.id=id;
+		department = 3;
+		this.headline = headline;
+		fdao = new FeedDAO();
 	}
 
 }

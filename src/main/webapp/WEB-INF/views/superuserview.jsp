@@ -19,6 +19,7 @@
 <body>
 	<div class="container" style="width:550px;"">
 		<section class="register">
+			<h2>Hi ${sessionUser.firstName } ${sessionUser.lastName }</h2>
 			<h1>Super User View</h1>
 			<h2>Manage Editors</h2>
 			<div class="reg_section personal_info">

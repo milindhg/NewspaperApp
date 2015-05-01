@@ -19,55 +19,142 @@ import com.se.newspaperapp.model.creators.FeedEditor;
 import com.se.newspaperapp.model.creators.SportsFeedEditor;
 import com.se.newspaperapp.model.products.Feed;
 
-/**
- * Handles requests for the application home page.
- */
-@Controller
-public class FeedController {
+public class FeedController implements IFeedController  {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(FeedController.class);
 
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Display addfeed page to the editor.
 	 */
-	@RequestMapping(value = "addfeed", method = RequestMethod.GET)
-	public String login(Locale locale, Model model) {
+	public String addfeed(Locale locale, Model model,HttpSession session) {
+		model.addAttribute("sessionUser",session.getAttribute("sessionUser"));
 		return "addfeed";
 	}
 
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Add the feed given by the user.
 	 */
-	@RequestMapping(value = "addfeed", method = RequestMethod.POST)
-	public String login(@RequestParam("headline") String headline, Model model,
+	public String addfeed(String headline, Model model, HttpSession session) {
+		User u = (User) session.getAttribute("sessionUser");
+		if (null == u) {
+			return "login";
+		} else {
+			int dept = u.getDepartment();
+			FeedEditor feedEditor = null;
+			Feed feed = null;
+			switch (dept) {
+			case 1:
+				feedEditor = new BusinessFeedEditor();
+				feed = feedEditor.createFeed(headline);
+				break;
+			case 2:
+				feedEditor = new EntertainmentFeedEditor();
+				feed = feedEditor.createFeed(headline);
+				break;
+			case 3:
+				feedEditor = new SportsFeedEditor();
+				feed = feedEditor.createFeed(headline);
+				break;
+			default:
+				return "login";
+			}
+			feed.addFeed();
+			return "redirect:home";
+		}
+	}
+
+	/**
+	 * delete the feed selected by the user.
+	 */
+	public String deletefeed(int id, Model model, HttpSession session) {
+		User u = (User) session.getAttribute("sessionUser");
+		if (null == u) {
+			return "login";
+		} else {
+			int dept = u.getDepartment();
+			FeedEditor feedEditor = null;
+			Feed feed = null;
+			switch (dept) {
+			case 1:
+				feedEditor = new BusinessFeedEditor();
+				break;
+			case 2:
+				feedEditor = new EntertainmentFeedEditor();
+				break;
+			case 3:
+				feedEditor = new SportsFeedEditor();
+				break;
+			default:
+				return "login";
+			}
+			feed = feedEditor.prepareDeleteFeed(id);
+			feed.deleteFeed();
+			return "redirect:home";
+		}
+	}
+
+
+	/**
+	 * display edit feed page to hte editor.
+	 */
+	public String editfeed(int id, Model model, HttpSession session) {
+		User u = (User) session.getAttribute("sessionUser");
+		if (null == u) {
+			return "login";
+		} else {
+			int dept = u.getDepartment();
+			FeedEditor feedEditor = null;
+			Feed feed = null;
+			switch (dept) {
+			case 1:
+				feedEditor = new BusinessFeedEditor();
+				break;
+			case 2:
+				feedEditor = new EntertainmentFeedEditor();
+				break;
+			case 3:
+				feedEditor = new SportsFeedEditor();
+				break;
+			default:
+				return "login";
+			}
+			feed = feedEditor.prepareDeleteFeed(id);
+			feed = feed.getFeed();
+			model.addAttribute("feed",feed);
+			model.addAttribute("sessionUser",session.getAttribute("sessionUser"));
+			return "editfeed";
+		}
+
+	}
+
+	/**
+	 * update the feed based on the input given by the editor.
+	 */
+	public String editFeed(int id, String headline, Model model,
 			HttpSession session) {
 		User u = (User) session.getAttribute("sessionUser");
 		if (null == u) {
 			return "login";
 		} else {
 			int dept = u.getDepartment();
-			FeedEditor feedEditor =null;
-			Feed feed=null;
-			switch(dept){
-			case 1: 
+			FeedEditor feedEditor = null;
+			Feed feed = null;
+			switch (dept) {
+			case 1:
 				feedEditor = new BusinessFeedEditor();
-				feed = feedEditor.createFeed(headline);
-				feed.addFeed();
 				break;
-			case 2: 
+			case 2:
 				feedEditor = new EntertainmentFeedEditor();
-				feed = feedEditor.createFeed(headline);
-				feed.addFeed();
 				break;
-			case 3: 
+			case 3:
 				feedEditor = new SportsFeedEditor();
-				feed = feedEditor.createFeed(headline);
-				feed.addFeed();
 				break;
-				default:
-					return "login";
+			default:
+				return "login";
 			}
+			feed = feedEditor.prepareEditFeed(id, headline);
+			feed.editFeed();
 			return "redirect:home";
 		}
 	}

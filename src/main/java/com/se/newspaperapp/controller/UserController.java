@@ -9,10 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.se.newspaperapp.dao.DatabaseHandlerSingleton;
 import com.se.newspaperapp.model.User;
@@ -26,20 +22,17 @@ import com.se.newspaperapp.model.products.GenericFeed;
 import com.se.newspaperapp.model.products.SportsFeed;
 
 /**
- * Handles requests for the application home page.
+ * Handles requests for the users handling.
  */
-@Controller
-@SessionAttributes("sessionUser")
-public class UserController {
+public class UserController implements IUserController{
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(UserController.class);
 	private User uh = new User();
 
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Show the login page
 	 */
-	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String login(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
@@ -47,12 +40,9 @@ public class UserController {
 	}
 
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Perform login by taking the username and password
 	 */
-	@SuppressWarnings("unused")
-	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login(@RequestParam("email") String email,
-			@RequestParam("password") String password, Model model,
+	public String login(String email, String password, Model model,
 			HttpSession session) {
 
 		User u = new User();
@@ -67,20 +57,18 @@ public class UserController {
 	}
 
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Perform logout and redirect to login
 	 */
-	@RequestMapping(value = "logout")
 	public String logout(Model model, HttpSession session) {
 		session.invalidate();
 		model.asMap().clear();
 		DatabaseHandlerSingleton.close();
-		return "login";
+		return "redirect:login";
 	}
 
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Show User registration page
 	 */
-	@RequestMapping(value = "register", method = RequestMethod.GET)
 	public String register(Locale locale, Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
@@ -88,16 +76,11 @@ public class UserController {
 	}
 
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Register user by taking the inputs
 	 */
-	@RequestMapping(value = "register", method = RequestMethod.POST)
-	public String registerUser(@RequestParam("firstname") String firstName,
-			@RequestParam("lastname") String lastName,
-			@RequestParam("contactnumber") String contactNumber,
-			@RequestParam("email") String email,
-			@RequestParam("password") String password, Model model,
+	public String registerUser(String firstName, String lastName,
+			String contactNumber, String email, String password, Model model,
 			HttpSession session) {
-
 		User u = new User();
 		u.setFirstName(firstName);
 		u.setLastName(lastName);
@@ -114,15 +97,13 @@ public class UserController {
 	}
 
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Show home view as per the user role
 	 */
-	@RequestMapping(value = "home", method = RequestMethod.GET)
 	public String homeview(Locale locale, Model model, HttpSession session) {
 		User u = (User) session.getAttribute("sessionUser");
 		Feed feed =null;
 		ArrayList<Feed> feeds =null;
-		if (null == u)
-			return "login";
+		String department=null;
 		switch (u.getRole()) {
 		case 0:	//Role is User
 			feed = new GenericFeed();
@@ -148,17 +129,20 @@ public class UserController {
 			switch(dept){
 			case 1: 	//Department is Business
 				feed = new BusinessFeed();
+				department="Business";
 				break;
 			case 2: 	//Department is Entertainment
 				feed = new EntertainmentFeed();
+				department="Entertainment";
 				break;
 			case 3: 	//Department is Sports
 				feed = new SportsFeed();
+				department="Sports";
 				break;
 			}
 				feeds = feed.getFeeds(1);
 				model.addAttribute("feeds", feeds);
-
+				model.addAttribute("department",department);
 			return "editorview";
 		case 2:
 			ArrayList<User> usersList = uh.getAllEditors();
@@ -171,26 +155,20 @@ public class UserController {
 	}
 
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Show add user form
 	 */
-	@RequestMapping(value = "adduser", method = RequestMethod.GET)
-	public String addUser(Locale locale, Model model) {
+	public String addUser(Locale locale, Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
 		return "adduser";
 	}
 
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Add the user as per the given inputs
 	 */
-	@RequestMapping(value = "adduser", method = RequestMethod.POST)
-	public String addUser(@RequestParam("firstname") String firstName,
-			@RequestParam("lastname") String lastName,
-			@RequestParam("contactnumber") String contactNumber,
-			@RequestParam("email") String email,
-			@RequestParam("password") String password,
-			@RequestParam("department") int department, Model model,
-			HttpSession session) {
+	public String addUser(String firstName, String lastName,
+			String contactNumber, String email, String password,
+			int department, Model model, HttpSession session) {
 		User u = new User();
 		u.setFirstName(firstName);
 		u.setLastName(lastName);
@@ -205,11 +183,9 @@ public class UserController {
 	}
 
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Delete the specified user
 	 */
-	@RequestMapping(value = "deleteuser", method = RequestMethod.GET)
-	public String deleteUser(@RequestParam("userId") int userId, Model model,
-			HttpSession session) {
+	public String deleteUser(int userId, Model model, HttpSession session) {
 
 		int res = uh.deleteUser(userId);
 

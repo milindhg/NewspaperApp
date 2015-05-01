@@ -14,8 +14,5 @@ import com.se.newspaperapp.model.products.Feed;
  */
 public interface IFeed {
 	
-	public void addFeed();
-	/*public void getFeed();
-	void deleteFeed(int id);*/
 	public ArrayList<Feed> getFeeds(int channel);
 }

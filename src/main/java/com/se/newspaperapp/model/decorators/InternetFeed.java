@@ -31,10 +31,4 @@ public class InternetFeed extends FeedDecorator {
 		return feeds;
 	}
 
-	@Override
-	public void addFeed() {
-		// TODO Auto-generated method stub
-
-	}
-
 }

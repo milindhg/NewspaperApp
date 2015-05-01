@@ -19,16 +19,19 @@
 <body>
 	<div class="container">
 		<section class="register">
+		    <h2>Hi ${sessionUser.firstName } ${sessionUser.lastName }</h2>
 			<h1>Editor View</h1>
 			<div class="reg_section personal_info">
 				<table border="1">
 					<tr>
-						<th><h3>Internet Headlines</h3></th>
+						<th><h3>${department} Headlines</h3></th>
+						<th></th>
 						<th></th>
 					</tr>
 					<c:forEach items="${feeds}" var="feed">
 						<tr>
 							<td>${feed.headline}</td>
+							<td><a href="editfeed?id=${feed.id}"> Edit </a></td>
 							<td><a href="deletefeed?id=${feed.id}"> Delete </a></td>
 						</tr>
 					</c:forEach>

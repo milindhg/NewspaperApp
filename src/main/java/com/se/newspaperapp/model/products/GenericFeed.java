@@ -45,37 +45,4 @@ public class GenericFeed extends Feed {
 		return feeds;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.se.newspaperapp.model.products.Feed#addFeed()
-	 */
-	@Override
-	public void addFeed() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.se.newspaperapp.model.products.Feed#deleteFeed()
-	 */
-	@Override
-	public void deleteFeed() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.se.newspaperapp.model.products.Feed#getFeed()
-	 */
-	@Override
-	public Feed getFeed() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

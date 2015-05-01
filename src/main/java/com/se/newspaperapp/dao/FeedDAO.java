@@ -253,39 +253,6 @@ public class FeedDAO {
 	}
 
 	/**
-	 * @return List of Feeds by department id
-	 * @throws SQLException
-	 */
-	/*
-	 * public ArrayList<Feed> selectFeedsByDeptId(int deptId) throws
-	 * SQLException { String SelectFeedsByDeptStatement = SELECT +
-	 * " where department=?"; PreparedStatement ps = null; ResultSet rSet =
-	 * null; try { con = DatabaseHandlerSingleton.getDBConnection(); ps =
-	 * con.prepareStatement(SelectFeedsByDeptStatement); ps.setInt(1, deptId);
-	 * rSet = ps.executeQuery(); ArrayList<Feed> Feeds = new ArrayList<Feed>();
-	 * if (rSet != null) { while (rSet.next()) { Feed nf = new Feed();
-	 * nf.setId(rSet.getInt("id")); nf.setHeadline(rSet.getString("headline"));
-	 * nf.setDepartment(rSet.getInt("department")); Feeds.add(nf); } } return
-	 * Feeds; } catch (SQLException e) { e.printStackTrace(); throw e; } finally
-	 * { if (rSet != null) rSet.close(); if (ps != null) ps.close(); }
-	 * 
-	 * }
-	 * 
-	 * public Feed selectFeedByPrimaryKey(int id) throws SQLException { String
-	 * SelectFeedByPrimaryKeyStatement = SELECT + " where news_feed.id=?;";
-	 * PreparedStatement ps = null; ResultSet rSet = null; try { con =
-	 * DatabaseHandlerSingleton.getDBConnection(); ps =
-	 * con.prepareStatement(SelectFeedByPrimaryKeyStatement); ps.setInt(1, id);
-	 * rSet = ps.executeQuery(); if (rSet.next()) { Feed nf = new Feed();
-	 * nf.setId(rSet.getInt("id")); nf.setHeadline(rSet.getString("headline"));
-	 * nf.setDepartment(rSet.getInt("department")); return nf; } else return
-	 * null; } catch (SQLException e) { e.printStackTrace(); throw e; } finally
-	 * { if (rSet != null) rSet.close(); if (ps != null) ps.close();
-	 * 
-	 * } }
-	 */
-
-	/**
 	 * @param u
 	 * @throws SQLException
 	 */
@@ -380,23 +347,220 @@ public class FeedDAO {
 		}
 	}
 
-	/*
-	 * public int updateFeed(Feed nf) throws SQLException { String
-	 * updateFeedStatement = UPDATE; PreparedStatement ps = null; int result =
-	 * -1; try { con = DatabaseHandlerSingleton.getDBConnection(); ps =
-	 * con.prepareStatement(updateFeedStatement); ps.setString(1,
-	 * nf.getHeadline()); ps.setInt(2, nf.getDepartment()); result =
-	 * ps.executeUpdate(); return result; } catch (SQLException e) {
-	 * e.printStackTrace(); throw e; } finally { if (ps != null) ps.close();
-	 * 
-	 * } }
-	 * 
-	 * public int deleteFeed(int id) throws SQLException { String
-	 * updateFeedStatement = DELETE; PreparedStatement ps = null; int result =
-	 * -1; try { con = DatabaseHandlerSingleton.getDBConnection(); ps =
-	 * con.prepareStatement(updateFeedStatement); ps.setInt(1, id); result =
-	 * ps.executeUpdate(); return result; } catch (SQLException e) {
-	 * e.printStackTrace(); throw e; } finally { if (ps != null) ps.close(); } }
+	
+	/**
+	 * @param u
+	 * @throws SQLException
 	 */
+	public void updateFeed(int id, String headline, int department) throws SQLException {
+		updateNewsFeed(id, headline, department);
+		updateInternetFeed(id, headline, department);
+		updateTwitterFeed(id, headline, department);
+	}
+
+	/**
+	 * @param u
+	 * @return
+	 * @throws SQLException
+	 */
+	public int updateInternetFeed(int id, String headline, int department)
+			throws SQLException {
+		con = DatabaseHandlerSingleton.getDBConnection();
+		String updateFeedStatement = UPDATE_INTERNETFEED;
+		PreparedStatement ps = null;
+		int result = -1;
+		try {
+			con = DatabaseHandlerSingleton.getDBConnection();
+			ps = con.prepareStatement(updateFeedStatement);
+			ps.setString(1, headline);
+			ps.setInt(2, department);
+			ps.setInt(3, id);
+			result = ps.executeUpdate();
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (ps != null)
+				ps.close();
+		}
+	}
+
+	/**
+	 * @param u
+	 * @return
+	 * @throws SQLException
+	 */
+	public int updateNewsFeed(int id, String headline, int department)
+			throws SQLException {
+		con = DatabaseHandlerSingleton.getDBConnection();
+		String updateFeedStatement = UPDATE_NEWSFEED;
+		PreparedStatement ps = null;
+		int result = -1;
+		try {
+			con = DatabaseHandlerSingleton.getDBConnection();
+			ps = con.prepareStatement(updateFeedStatement);
+			ps.setString(1, headline);
+			ps.setInt(2, department);
+			ps.setInt(3, id);
+			result = ps.executeUpdate();
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (ps != null)
+				ps.close();
+		}
+	}
+
+	/**
+	 * @param u
+	 * @return
+	 * @throws SQLException
+	 */
+	public int updateTwitterFeed(int id, String headline, int department)
+			throws SQLException {
+		con = DatabaseHandlerSingleton.getDBConnection();
+		String updateFeedStatement = UPDATE_TWITTERFEED;
+		PreparedStatement ps = null;
+		int result = -1;
+		try {
+			con = DatabaseHandlerSingleton.getDBConnection();
+			ps = con.prepareStatement(updateFeedStatement);
+			ps.setString(1, headline);
+			ps.setInt(2, department);
+			ps.setInt(3, id);
+			result = ps.executeUpdate();
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (ps != null)
+				ps.close();
+		}
+	}
+
+	/**
+	 * @param u
+	 * @throws SQLException
+	 */
+	public void deleteFeed(int id) throws SQLException {
+		deleteNewsFeed(id);
+		deleteInternetFeed(id);
+		deleteTwitterFeed(id);
+	}
+
+	/**
+	 * @param u
+	 * @return
+	 * @throws SQLException
+	 */
+	public int deleteInternetFeed(int id)
+			throws SQLException {
+		con = DatabaseHandlerSingleton.getDBConnection();
+		String deleteFeedStatement = DELETE_INTERNETFEED;
+		PreparedStatement ps = null;
+		int result = -1;
+		try {
+			con = DatabaseHandlerSingleton.getDBConnection();
+			ps = con.prepareStatement(deleteFeedStatement);
+			ps.setInt(1, id);
+			result = ps.executeUpdate();
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (ps != null)
+				ps.close();
+		}
+	}
+
+	/**
+	 * @param u
+	 * @return
+	 * @throws SQLException
+	 */
+	public int deleteNewsFeed(int id)
+			throws SQLException {
+		con = DatabaseHandlerSingleton.getDBConnection();
+		String deleteFeedStatement = DELETE_NEWSFEED;
+		PreparedStatement ps = null;
+		int result = -1;
+		try {
+			con = DatabaseHandlerSingleton.getDBConnection();
+			ps = con.prepareStatement(deleteFeedStatement);
+			ps.setInt(1, id);
+			result = ps.executeUpdate();
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (ps != null)
+				ps.close();
+		}
+	}
+
+	/**
+	 * @param u
+	 * @return
+	 * @throws SQLException
+	 */
+	public int deleteTwitterFeed(int id)
+			throws SQLException {
+		con = DatabaseHandlerSingleton.getDBConnection();
+		String deleteFeedStatement = DELETE_TWITTERFEED;
+		PreparedStatement ps = null;
+		int result = -1;
+		try {
+			con = DatabaseHandlerSingleton.getDBConnection();
+			ps = con.prepareStatement(deleteFeedStatement);
+			ps.setInt(1, id);
+			result = ps.executeUpdate();
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (ps != null)
+				ps.close();
+		}
+	}
+
+	public Feed selectFeedByPrimaryKey(int id) throws SQLException {
+		String SelectNewsFeedByPrimKeyStatement = SELECT_NEWSFEED
+				+ " WHERE id=?;";
+		PreparedStatement ps = null;
+		ResultSet rSet = null;
+		Feed feed = null;
+		try {
+			con = DatabaseHandlerSingleton.getDBConnection();
+			ps = con.prepareStatement(SelectNewsFeedByPrimKeyStatement);
+			ps.setInt(1, id);
+			rSet = ps.executeQuery();
+			if (rSet != null) {
+				while (rSet.next()) {
+					feed = new GenericFeed();
+					feed.setId(rSet.getInt("id"));
+					feed.setHeadline(rSet.getString("headline"));
+					feed.setDepartment(rSet.getInt("department"));
+				}
+			}
+			return feed;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rSet != null)
+				rSet.close();
+			if (ps != null)
+				ps.close();
+		}
+		return feed;
+	}
+
+	
 
 }

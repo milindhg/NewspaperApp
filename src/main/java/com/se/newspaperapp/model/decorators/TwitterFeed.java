@@ -20,12 +20,6 @@ public class TwitterFeed extends FeedDecorator {
 	}
 
 	@Override
-	public void addFeed() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public ArrayList<Feed> getFeeds(int channel) {
 		for (Feed f : feeds) {
 			f.setHeadline("Twitter Feed:" + f.getHeadline());

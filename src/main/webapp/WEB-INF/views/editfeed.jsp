@@ -19,12 +19,13 @@
   <div class="container">
     <section class="register">
 			<h2>Hi ${sessionUser.firstName } ${sessionUser.lastName }</h2>
-      <h1>Add New Feed</h1>
-      <form method="post" action="addfeed">
+      <h1>Edit Feed</h1>
+      <form method="post" action="editfeed">
       <div class="reg_section personal_info">
-      <input type="text" name="headline" value="" placeholder="Your Headline Name">
+      <input type="hidden" name="id" value="${feed.id}">
+      <input type="text" name="headline" value="${feed.headline}" placeholder="Your Headline Name">
       </div>
-      <p class="submit"><input type="submit" name="commit" value="Add Feed"></p>
+      <p class="submit"><input type="submit" name="commit" value="Save Feed"></p>
       </form>
     </section>
     <div class="reg_section password">

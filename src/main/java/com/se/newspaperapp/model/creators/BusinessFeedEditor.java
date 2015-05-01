@@ -18,4 +18,17 @@ public class BusinessFeedEditor extends FeedEditor {
 		return feed;
 	}
 
+	@Override
+	public Feed prepareDeleteFeed(int id) {
+		Feed feed = new BusinessFeed(id);
+		return feed;
+	}
+
+	@Override
+	public Feed prepareEditFeed(int id, String headline) {
+		Feed feed = new BusinessFeed(id,headline);
+		return feed;
+	}
+		
+
 }
